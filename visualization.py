@@ -1,37 +1,33 @@
 import streamlit as st
-import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
-# Load the data into a pandas DataFrame
-df = pd.read_csv('your_data_file.csv')
+# Define a function to create a chart
+def create_chart():
+    # Generate some sample data
+    x = np.linspace(0, 10, 100)
+    y = np.sin(x)
 
+    # Create a line plot of the data
+    fig, ax = plt.subplots()
+    ax.plot(x, y)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_title('Business Visualization')
+
+    # Return the chart as a PNG image
+    return fig
+
+# Define the Streamlit app
 def main():
     # Set the title and subtitle of the app
-    st.title("Business Data Visualization")
-    st.subheader("Sales data for 2022")
+    st.title("Business Visualization App")
+    st.subheader("Using Streamlit and Matplotlib")
 
-    # Show a scatter plot of SellPrice vs Margin
-    fig, ax = plt.subplots()
-    ax.scatter(df['SellPrice'], df['Margin'])
-    ax.set_xlabel('Sell Price')
-    ax.set_ylabel('Margin')
-    st.pyplot(fig)
+    # Create a chart and display it
+    chart = create_chart()
+    st.pyplot(chart)
 
-    # Show a histogram of the SellPrice column
-    fig, ax = plt.subplots()
-    ax.hist(df['SellPrice'], bins=10)
-    ax.set_xlabel('Sell Price')
-    ax.set_ylabel('Count')
-    st.pyplot(fig)
-
-    # Show a bar chart of the total sales per SKU
-    sales_by_sku = df.groupby('Sku')['SaleInvoice'].count()
-    fig, ax = plt.subplots()
-    ax.bar(sales_by_sku.index, sales_by_sku.values)
-    ax.set_xticklabels(sales_by_sku.index, rotation=90)
-    ax.set_xlabel('SKU')
-    ax.set_ylabel('Number of Sales')
-    st.pyplot(fig)
-
-if __name__ == "__main__":
+# Run the Streamlit app
+if __name__ == '__main__':
     main()
